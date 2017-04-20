@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">OnTheStreet</string>
+    <string name="hint_place_location">Location</string>
+    <string name="hint_place_description">Description</string>
+    <string name="hint_place_name">Name</string>
+    <string name="add_new_place">Add new place</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="item">Item</string>
+</resources>
