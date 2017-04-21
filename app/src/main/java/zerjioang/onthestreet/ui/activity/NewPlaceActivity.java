@@ -1,15 +1,13 @@
 package zerjioang.onthestreet.ui.activity;
 
-import android.app.ActionBar;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import zerjioang.onthestreet.R;
-import zerjioang.onthestreet.data.DataManager;
+import zerjioang.onthestreet.controller.NewPlaceController;
 import zerjioang.onthestreet.model.pojox.Place;
 
 public class NewPlaceActivity extends AbstractBaseActivity {
@@ -19,46 +17,70 @@ public class NewPlaceActivity extends AbstractBaseActivity {
     private EditText txtPlaceLocation;
     private Button buttonCancelNewPlace;
     private Button buttonSaveNewPlace;
+    private Button btnAddContactNewPlace;
+
+    private NewPlaceController controller;
+
+    private Place p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_place);
+        /*
         ActionBar bar = getActionBar();
         if(bar!=null){
             bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#330000ff")));
             bar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#550000ff")));
         }
+        */
 
         txtPlaceName = (EditText) findViewById(R.id.txtPlaceName);
         txtPlaceDescription = (EditText) findViewById(R.id.txtPlaceDescription);
         txtPlaceLocation = (EditText) findViewById(R.id.txtPlaceLocation);
         buttonCancelNewPlace = (Button) findViewById(R.id.buttonCancelNewPlace);
         buttonSaveNewPlace = (Button) findViewById(R.id.buttonSaveNewPlace);
+        btnAddContactNewPlace = (Button) findViewById(R.id.btnAddContactNewPlace);
+
+        //create controller
+        controller = new NewPlaceController(this);
+
+        p = new Place();
 
         //add listeners
         buttonCancelNewPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().finish();
+                controller.cancel();
             }
         });
 
         buttonSaveNewPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveNewPlace();
-                getActivity().finish();
+                p = new Place(
+                        txtPlaceName.getText().toString(),
+                        txtPlaceLocation.getText().toString(),
+                        txtPlaceDescription.getText().toString()
+                );
+                if(controller.isValidPlace(p)){
+                    controller.save(p);
+                }
+            }
+        });
+
+        btnAddContactNewPlace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.addContact(p);
             }
         });
     }
 
-    private void saveNewPlace() {
-        Place p = new Place(
-                txtPlaceName.getText().toString(),
-                txtPlaceDescription.getText().toString(),
-                txtPlaceLocation.getText().toString()
-        );
-        DataManager.getInstance().addPlace(this, p);
+    //code
+    @Override
+    public void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+        controller.onActivityResult(reqCode, resultCode, data);
     }
 }

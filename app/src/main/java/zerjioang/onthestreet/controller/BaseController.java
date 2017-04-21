@@ -1,6 +1,7 @@
 package zerjioang.onthestreet.controller;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 /**
@@ -25,7 +26,13 @@ public class BaseController extends AbstractBaseController {
 
         // 2. Chain together various setter methods to set the dialog characteristics
         builder.setMessage("On the street app")
-                .setTitle("Alpha version");
+                .setTitle("Alpha version")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
 
         // 3. Get the AlertDialog from create()
         AlertDialog dialog = builder.create();

@@ -15,13 +15,20 @@ import zerjioang.onthestreet.model.adapter.IAbstractView;
 public class Place implements IAbstractView, Serializable {
 
     private String name, place, description;
-    private ArrayList<Contact> listContanct;
+    private ArrayList<Contact> listaContact;
 
     public Place(String name, String place, String description) {
         this.name = name;
         this.place = place;
         this.description = description;
-        this.listContanct = new ArrayList<>();
+        this.listaContact = new ArrayList<>();
+    }
+
+    public Place() {
+        this.name = "";
+        this.description = "";
+        this.place = "";
+        this.listaContact = new ArrayList<>();
     }
 
     public String getDescription() {
@@ -62,11 +69,15 @@ public class Place implements IAbstractView, Serializable {
         return R.layout.recyclerview_places_item;
     }
 
-    public ArrayList<Contact> getListContanct() {
-        return listContanct;
+    public ArrayList<Contact> getListaContact() {
+        return listaContact;
     }
 
-    public void setListContanct(ArrayList<Contact> listContanct) {
-        this.listContanct = listContanct;
+    public void setListaContact(ArrayList<Contact> listaContact) {
+        this.listaContact = listaContact;
+    }
+
+    public void addContact(Contact contact) {
+        this.listaContact.add(contact);
     }
 }
