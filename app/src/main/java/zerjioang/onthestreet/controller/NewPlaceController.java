@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 
 import zerjioang.onthestreet.data.DataManager;
@@ -36,6 +37,9 @@ public class NewPlaceController extends BaseController{
     }
 
     private void saveNewPlace(Place p) {
+        if(this.p!=null){
+            p.setListaContact(this.p.getListaContact());
+        }
         this.p = p;
         DataManager.getInstance().addPlace(getActivity(), p);
     }
@@ -74,12 +78,12 @@ public class NewPlaceController extends BaseController{
     }
 
     public boolean isValidPlace(Place p) {
-        if(p.getDescription()==null || p.getDescription().trim().length()==0){
-            showError("Description needed");
+        if(p.getName()==null || p.getName().trim().length()==0){
+            showError("Name needed");
             return false;
         }
-        else if(p.getName()==null || p.getName().trim().length()==0){
-            showError("Name needed");
+        else if(p.getDescription()==null || p.getDescription().trim().length()==0){
+            showError("Description needed");
             return false;
         }
         else if(p.getPlace()==null || p.getPlace().trim().length()==0){
@@ -94,7 +98,7 @@ public class NewPlaceController extends BaseController{
         pop.setAction("OK", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.d(getClass().getSimpleName(), "clicked");
             }
         });
         pop.show();

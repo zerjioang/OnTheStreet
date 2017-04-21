@@ -80,4 +80,8 @@ public class Place implements IAbstractView, Serializable {
     public void addContact(Contact contact) {
         this.listaContact.add(contact);
     }
+
+    public int getContactCount() {
+        return this.listaContact.size();
+    }
 }

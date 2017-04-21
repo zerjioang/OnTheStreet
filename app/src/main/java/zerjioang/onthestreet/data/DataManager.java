@@ -51,15 +51,17 @@ public class DataManager {
             File f = new File(context.getFilesDir(), "place.data");
             ObjectInputStream fos = new ObjectInputStream(new FileInputStream(f));
             try {
-                return (ArrayList) fos.readObject();
+                this.placeList = (ArrayList) fos.readObject();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                this.placeList = new ArrayList<>();
             }
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
+            this.placeList = new ArrayList<>();
         }
-        return new ArrayList<>();
+        return this.placeList;
     }
 
     public ArrayList<Place> getPlaceList(){

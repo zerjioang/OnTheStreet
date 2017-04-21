@@ -1,10 +1,12 @@
 package zerjioang.onthestreet.model.pojox;
 
+import java.io.Serializable;
+
 /**
  * Created by .local on 19/04/2017.
  */
 
-public class Contact {
+public class Contact implements Serializable {
 
     private String name, surname, phone;
 

@@ -9,11 +9,22 @@ app:layout_behavior="@string/appbar_scrolling_view_behavior"
 tools:context="zerjioang.onthestreet.ui.activity.ListActivity"
 tools:showIn="@layout/activity_list">
 
+    <TextView
+        android:id="@+id/txtListOfPlaces"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="List of places"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/placesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@+id/txtListOfPlaces" />
 </RelativeLayout>
