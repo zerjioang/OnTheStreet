@@ -17,9 +17,11 @@ import zerjioang.onthestreet.model.pojox.Place;
 public class PlaceHolderAdapter extends RecyclerView.Adapter<PlaceHolder> {
 
     private final List<Place> list;
+    private final View.OnClickListener listener;
 
-    public PlaceHolderAdapter(List<Place> list) {
+    public PlaceHolderAdapter(List<Place> list, View.OnClickListener listener) {
         this.list = list;
+        this.listener = listener;
     }
 
     @Override
@@ -30,7 +32,7 @@ public class PlaceHolderAdapter extends RecyclerView.Adapter<PlaceHolder> {
 
     @Override
     public void onBindViewHolder(PlaceHolder holder, int position) {
-        holder.bind(list.get(position));
+        holder.bind(list.get(position), listener);
     }
 
     @Override

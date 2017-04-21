@@ -15,6 +15,7 @@ import zerjioang.onthestreet.model.holder.PlaceHolderAdapter;
 import zerjioang.onthestreet.model.pojox.Place;
 import zerjioang.onthestreet.ui.activity.ListActivity;
 import zerjioang.onthestreet.ui.activity.NewPlaceActivity;
+import zerjioang.onthestreet.ui.activity.PlaceDetailsActivity;
 
 /**
  * Created by .local on 21/03/2017.
@@ -35,9 +36,6 @@ public class ActivityController extends BaseController {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                        */
                 Intent t = new Intent(listActivity, NewPlaceActivity.class);
                 listActivity.startActivity(t);
                 //animate
@@ -51,8 +49,16 @@ public class ActivityController extends BaseController {
         placesRecyclerView.setLayoutManager(mLinearLayoutManager);
         //read data from file
         ArrayList<Place> placeList = DataManager.getInstance().readPlaceList(listActivity);
+        //create item click listener
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent t = new Intent(getActivity(), PlaceDetailsActivity.class);
+                getActivity().startActivity(t);
+            }
+        };
         //set adapter for data
-        recyclerAdapter = new PlaceHolderAdapter(placeList);
+        recyclerAdapter = new PlaceHolderAdapter(placeList, listener);
         placesRecyclerView.setAdapter(recyclerAdapter);
     }
 

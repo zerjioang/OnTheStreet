@@ -2,11 +2,8 @@ package zerjioang.onthestreet.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 
 import zerjioang.onthestreet.R;
 import zerjioang.onthestreet.controller.ActivityController;
@@ -35,6 +32,8 @@ public class ListActivity extends AbstractBaseActivity {
         controller = new ActivityController(this);
         controller.initFloatingActionButtonEvent(fab);
         controller.initRecyclerView(placesRecyclerView, this);
+
+
     }
 
     @Override

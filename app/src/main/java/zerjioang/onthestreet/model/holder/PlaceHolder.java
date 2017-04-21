@@ -24,9 +24,13 @@ public class PlaceHolder extends RecyclerView.ViewHolder{
         placeContactNumber = (TextView)itemView.findViewById(R.id.itemPlaceContactNumberTextView);
     }
 
-    public void bind(Place place) {
+    public void bind(final Place place, View.OnClickListener listener) {
         this.placeName.setText(place.getName());
         this.placeLocation.setText(place.getPlace());
         this.placeContactNumber.setText("Contacts: "+place.getContactCount());
+
+        if(listener!=null){
+            itemView.setOnClickListener(listener);
+        }
     }
 }
