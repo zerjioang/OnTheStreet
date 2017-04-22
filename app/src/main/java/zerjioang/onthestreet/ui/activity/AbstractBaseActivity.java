@@ -11,7 +11,6 @@ import android.view.MenuItem;
 
 import zerjioang.onthestreet.R;
 import zerjioang.onthestreet.controller.AbstractBaseController;
-import zerjioang.onthestreet.controller.BaseController;
 
 /**
  * Created by .local on 19/04/2017.
@@ -19,12 +18,11 @@ import zerjioang.onthestreet.controller.BaseController;
 
 public abstract class AbstractBaseActivity extends AppCompatActivity {
 
-    private AbstractBaseController controller;
+    protected AbstractBaseController controller;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        controller = new BaseController(this);
     }
 
     @Override

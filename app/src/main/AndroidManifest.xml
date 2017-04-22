@@ -29,7 +29,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.NewPlaceActivity" />
-        <activity android:name=".ui.activity.PlaceDetailsActivity"></activity>
+        <activity android:name=".ui.activity.PlaceDetailsActivity" />
+        <activity
+            android:name=".ui.activity.settings.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>

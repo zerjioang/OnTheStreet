@@ -22,7 +22,7 @@ import zerjioang.onthestreet.ui.activity.PlaceDetailsActivity;
  * Created by .local on 21/03/2017.
  */
 
-public class ListActivityController extends BaseController {
+public class ListActivityController extends AbstractBaseController {
 
     private final ListActivity listActivity;
     private LinearLayoutManager mLinearLayoutManager;

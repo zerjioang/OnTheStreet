@@ -28,7 +28,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by .local on 22/04/2017.
  */
 
-public class PlaceDetailsController extends BaseController {
+public class PlaceDetailsController extends AbstractBaseController {
 
     private static final int REQUEST_CAMERA = 1;
     private static final int SELECT_FILE = 2;

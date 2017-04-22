@@ -17,7 +17,7 @@ import zerjioang.onthestreet.model.pojox.Place;
  * Created by .local on 21/04/2017.
  */
 
-public class NewPlaceController extends BaseController{
+public class NewPlaceController extends AbstractBaseController {
 
     // Declare
     private static final int PICK_CONTACT = 1;
