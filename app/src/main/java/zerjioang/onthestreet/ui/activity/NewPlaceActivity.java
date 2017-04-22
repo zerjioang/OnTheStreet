@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import zerjioang.onthestreet.R;
 import zerjioang.onthestreet.controller.NewPlaceController;
+import zerjioang.onthestreet.data.DataManager;
 import zerjioang.onthestreet.model.pojox.Place;
 
 public class NewPlaceActivity extends AbstractBaseActivity {
@@ -43,6 +44,15 @@ public class NewPlaceActivity extends AbstractBaseActivity {
         p = new Place();
         editMode = getFromExtras("editmode", false);
 
+        if(editMode){
+            //get place to be edited
+            p = DataManager.getInstance().getLastViewedPlace();
+            //update ui with values;
+            txtPlaceName.setText(p.getName());
+            txtPlaceLocation.setText(p.getLocation());
+            txtPlaceDescription.setText(p.getDescription());
+        }
+
         //add listeners
         buttonCancelNewPlace.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,13 +64,17 @@ public class NewPlaceActivity extends AbstractBaseActivity {
         buttonSaveNewPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                p = new Place(
-                        txtPlaceName.getText().toString(),
-                        txtPlaceLocation.getText().toString(),
-                        txtPlaceDescription.getText().toString()
-                );
+                p.setName(txtPlaceName.getText().toString());
+                p.setDescription(txtPlaceDescription.getText().toString());
+                p.setLocation(txtPlaceLocation.getText().toString());
                 if(controller.isValidPlace(p)){
-                    controller.save(p);
+                    if(editMode){
+                        int position = DataManager.getInstance().getLastViewedPlacePosition();
+                        controller.updateAndSave(getActivity(), position, p);
+                    }
+                    else{
+                        controller.save(p);
+                    }
                 }
             }
         });

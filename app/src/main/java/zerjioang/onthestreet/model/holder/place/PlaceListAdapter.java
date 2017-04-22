@@ -35,7 +35,8 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
 
     @Override
     public void onBindViewHolder(PlaceHolder holder, int position) {
-        holder.bind(list.get(position), listener);
+        Place place = list.get(position);
+        holder.bind(place, listener);
     }
 
     @Override

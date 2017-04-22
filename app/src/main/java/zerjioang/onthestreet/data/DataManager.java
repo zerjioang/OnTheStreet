@@ -1,5 +1,6 @@
 package zerjioang.onthestreet.data;
 
+import android.app.Activity;
 import android.content.Context;
 
 import java.io.File;
@@ -19,6 +20,7 @@ import zerjioang.onthestreet.model.pojox.Place;
 public class DataManager {
     private static final DataManager ourInstance = new DataManager();
     private Place lastViewedPlace;
+    private int lastViewedPlacePosition;
 
     public static DataManager getInstance() {
         return ourInstance;
@@ -100,5 +102,24 @@ public class DataManager {
 
     public Place getPlaceAt(int position) {
         return this.placeList.get(position);
+    }
+
+    public void deletePlace(Activity activity, int position) {
+        this.placeList.remove(position);
+        this.savePlaceList(activity);
+    }
+
+    public void replaceAt(Activity activity, int position, Place p) {
+        this.placeList.remove(position);
+        this.placeList.add(position, p);
+        this.savePlaceList(activity);
+    }
+
+    public int getLastViewedPlacePosition() {
+        return lastViewedPlacePosition;
+    }
+
+    public void setLastViewedPlacePosition(int lastViewedPlacePosition) {
+        this.lastViewedPlacePosition = lastViewedPlacePosition;
     }
 }

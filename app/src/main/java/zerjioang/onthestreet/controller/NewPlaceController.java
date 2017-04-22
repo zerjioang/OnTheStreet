@@ -108,4 +108,9 @@ public class NewPlaceController extends AbstractBaseController {
         });
         pop.show();
     }
+
+    public void updateAndSave(Activity activity, int position, Place p) {
+        DataManager.getInstance().replaceAt(activity, position, p);
+        getActivity().finish();
+    }
 }

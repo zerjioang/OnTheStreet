@@ -57,7 +57,8 @@ public class ListActivityController extends AbstractBaseController {
             public void recyclerViewListClicked(View v, int position) {
                 DataManager manager = DataManager.getInstance();
                 manager.setLastViewedPlace(manager.getPlaceAt(position));
-                showChooserDialog();
+                manager.setLastViewedPlacePosition(position);
+                showChooserDialog(position);
             }
         };
         //set adapter for data
@@ -69,7 +70,7 @@ public class ListActivityController extends AbstractBaseController {
         recyclerAdapter.notifyDataSetChanged();
     }
 
-    private void showChooserDialog() {
+    private void showChooserDialog(final int position) {
         final CharSequence[] items = {"View", "Edit", "Delete", "Cancel"};
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
         builder.setTitle("Place");
@@ -81,7 +82,7 @@ public class ListActivityController extends AbstractBaseController {
                 } else if (items[item].equals(items[1])) {
                     editPlace();
                 } else if (items[item].equals(items[2])) {
-                    deletePlace();
+                    deletePlace(position);
                 } else if (items[item].equals(items[3])) {
                     dialog.dismiss();
                 }
@@ -98,11 +99,11 @@ public class ListActivityController extends AbstractBaseController {
 
     private void viewPlace() {
         Intent t = new Intent(getActivity(), PlaceDetailsActivity.class);
-        //DataManager.getInstance().setLastViewedPlace();
         getActivity().startActivity(t);
     }
 
-    private void deletePlace() {
-
+    private void deletePlace(int position) {
+        DataManager.getInstance().deletePlace(getActivity(), position);
+        recyclerAdapter.notifyDataSetChanged();
     }
 }
