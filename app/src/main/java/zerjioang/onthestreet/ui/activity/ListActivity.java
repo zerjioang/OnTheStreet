@@ -12,8 +12,6 @@ public class ListActivity extends AbstractBaseActivity {
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
-
-    private ListActivityController controller;
     private RecyclerView placesRecyclerView;
 
 
@@ -31,8 +29,8 @@ public class ListActivity extends AbstractBaseActivity {
 
         //create activity controller
         controller = new ListActivityController(this);
-        controller.initFloatingActionButtonEvent(fab);
-        controller.initRecyclerView(placesRecyclerView, this);
+        ((ListActivityController)controller).initFloatingActionButtonEvent(fab);
+        ((ListActivityController)controller).initRecyclerView(placesRecyclerView, this);
 
 
     }
@@ -40,6 +38,6 @@ public class ListActivity extends AbstractBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        controller.reloadRecyclerView();
+        ((ListActivityController)controller).reloadRecyclerView();
     }
 }
