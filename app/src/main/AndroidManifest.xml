@@ -3,7 +3,7 @@
     package="zerjioang.onthestreet">
 
     <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
@@ -32,7 +32,18 @@
         <activity android:name=".ui.activity.PlaceDetailsActivity" />
         <activity
             android:name=".ui.activity.settings.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+
+        <!-- Start the Service if applicable on boot -->
+        <receiver android:name=".service.receiver.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- declare service -->
+        <service android:enabled="true" android:name=".service.BackgroundService" />
+
     </application>
 
 </manifest>

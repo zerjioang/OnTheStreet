@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import zerjioang.onthestreet.R;
 import zerjioang.onthestreet.data.DataManager;
+import zerjioang.onthestreet.model.adapter.RecyclerViewClickListener;
 import zerjioang.onthestreet.model.holder.place.PlaceListAdapter;
 import zerjioang.onthestreet.model.pojox.Place;
 import zerjioang.onthestreet.ui.activity.ListActivity;
@@ -51,9 +52,11 @@ public class ListActivityController extends AbstractBaseController {
         //read data from file
         ArrayList<Place> placeList = DataManager.getInstance().readPlaceList(listActivity);
         //create item click listener
-        View.OnClickListener listener = new View.OnClickListener() {
+        RecyclerViewClickListener  listener = new RecyclerViewClickListener() {
             @Override
-            public void onClick(View view) {
+            public void recyclerViewListClicked(View v, int position) {
+                DataManager manager = DataManager.getInstance();
+                manager.setLastViewedPlace(manager.getPlaceAt(position));
                 showChooserDialog();
             }
         };
@@ -95,6 +98,7 @@ public class ListActivityController extends AbstractBaseController {
 
     private void viewPlace() {
         Intent t = new Intent(getActivity(), PlaceDetailsActivity.class);
+        //DataManager.getInstance().setLastViewedPlace();
         getActivity().startActivity(t);
     }
 
