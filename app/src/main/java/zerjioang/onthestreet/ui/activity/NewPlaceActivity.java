@@ -23,11 +23,13 @@ public class NewPlaceActivity extends AbstractBaseActivity {
 
     private Place p;
 
+    private boolean editMode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_place);
-
+        editMode = false;
         txtPlaceName = (EditText) findViewById(R.id.txtPlaceName);
         txtPlaceDescription = (EditText) findViewById(R.id.txtPlaceDescription);
         txtPlaceLocation = (EditText) findViewById(R.id.txtPlaceLocation);
@@ -39,6 +41,7 @@ public class NewPlaceActivity extends AbstractBaseActivity {
         controller = new NewPlaceController(this);
 
         p = new Place();
+        editMode = getFromExtras("editmode", false);
 
         //add listeners
         buttonCancelNewPlace.setOnClickListener(new View.OnClickListener() {

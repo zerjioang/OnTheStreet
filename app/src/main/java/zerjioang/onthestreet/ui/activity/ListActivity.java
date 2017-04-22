@@ -6,14 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import zerjioang.onthestreet.R;
-import zerjioang.onthestreet.controller.ActivityController;
+import zerjioang.onthestreet.controller.ListActivityController;
 
 public class ListActivity extends AbstractBaseActivity {
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
 
-    private ActivityController controller;
+    private ListActivityController controller;
     private RecyclerView placesRecyclerView;
 
 
@@ -30,7 +30,7 @@ public class ListActivity extends AbstractBaseActivity {
         setSupportActionBar(toolbar);
 
         //create activity controller
-        controller = new ActivityController(this);
+        controller = new ListActivityController(this);
         controller.initFloatingActionButtonEvent(fab);
         controller.initRecyclerView(placesRecyclerView, this);
 

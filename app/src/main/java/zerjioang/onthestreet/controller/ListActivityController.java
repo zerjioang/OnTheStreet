@@ -1,6 +1,7 @@
 package zerjioang.onthestreet.controller;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 import zerjioang.onthestreet.R;
 import zerjioang.onthestreet.data.DataManager;
-import zerjioang.onthestreet.model.holder.PlaceHolderAdapter;
+import zerjioang.onthestreet.model.holder.place.PlaceListAdapter;
 import zerjioang.onthestreet.model.pojox.Place;
 import zerjioang.onthestreet.ui.activity.ListActivity;
 import zerjioang.onthestreet.ui.activity.NewPlaceActivity;
@@ -21,13 +22,13 @@ import zerjioang.onthestreet.ui.activity.PlaceDetailsActivity;
  * Created by .local on 21/03/2017.
  */
 
-public class ActivityController extends BaseController {
+public class ListActivityController extends BaseController {
 
     private final ListActivity listActivity;
     private LinearLayoutManager mLinearLayoutManager;
-    private PlaceHolderAdapter recyclerAdapter;
+    private PlaceListAdapter recyclerAdapter;
 
-    public ActivityController(ListActivity listActivity) {
+    public ListActivityController(ListActivity listActivity) {
         super(listActivity);
         this.listActivity = listActivity;
     }
@@ -53,16 +54,51 @@ public class ActivityController extends BaseController {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent t = new Intent(getActivity(), PlaceDetailsActivity.class);
-                getActivity().startActivity(t);
+                showChooserDialog();
             }
         };
         //set adapter for data
-        recyclerAdapter = new PlaceHolderAdapter(placeList, listener);
+        recyclerAdapter = new PlaceListAdapter(placeList, listener);
         placesRecyclerView.setAdapter(recyclerAdapter);
     }
 
     public void reloadRecyclerView() {
         recyclerAdapter.notifyDataSetChanged();
+    }
+
+    private void showChooserDialog() {
+        final CharSequence[] items = {"View", "Edit", "Delete", "Cancel"};
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+        builder.setTitle("Place");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].equals(items[0])) {
+                    viewPlace();
+                } else if (items[item].equals(items[1])) {
+                    editPlace();
+                } else if (items[item].equals(items[2])) {
+                    deletePlace();
+                } else if (items[item].equals(items[3])) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void editPlace() {
+        Intent t = new Intent(getActivity(), NewPlaceActivity.class);
+        t.putExtra("editmode", true);
+        getActivity().startActivity(t);
+    }
+
+    private void viewPlace() {
+        Intent t = new Intent(getActivity(), PlaceDetailsActivity.class);
+        getActivity().startActivity(t);
+    }
+
+    private void deletePlace() {
+
     }
 }

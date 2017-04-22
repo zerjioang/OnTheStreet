@@ -1,4 +1,4 @@
-package zerjioang.onthestreet.model.holder;
+package zerjioang.onthestreet.model.holder.place;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -27,7 +27,7 @@ public class PlaceHolder extends RecyclerView.ViewHolder{
 
     public void bind(final Place place, View.OnClickListener listener) {
         this.placeName.setText(place.getName());
-        this.placeLocation.setText(place.getPlace());
+        this.placeLocation.setText(place.getLocation());
         this.placeContactNumber.setText("Contacts: "+place.getContactCount());
         DataManager.getInstance().setLastViewedPlace(place);
         if(listener!=null){

@@ -91,7 +91,7 @@ public class NewPlaceController extends BaseController{
             showError("Description needed");
             return false;
         }
-        else if(p.getPlace()==null || p.getPlace().trim().length()==0){
+        else if(p.getLocation()==null || p.getLocation().trim().length()==0){
             showError("Location needed");
             return false;
         }

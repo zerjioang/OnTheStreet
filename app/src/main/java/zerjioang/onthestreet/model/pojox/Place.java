@@ -14,12 +14,12 @@ import zerjioang.onthestreet.model.adapter.IAbstractView;
 
 public class Place implements IAbstractView, Serializable {
 
-    private String name, place, description;
+    private String name, location, description;
     private ArrayList<Contact> listaContact;
 
     public Place(String name, String place, String description) {
         this.name = name;
-        this.place = place;
+        this.location = place;
         this.description = description;
         this.listaContact = new ArrayList<>();
     }
@@ -27,7 +27,7 @@ public class Place implements IAbstractView, Serializable {
     public Place() {
         this.name = "";
         this.description = "";
-        this.place = "";
+        this.location = "";
         this.listaContact = new ArrayList<>();
     }
 
@@ -47,12 +47,12 @@ public class Place implements IAbstractView, Serializable {
         this.name = name;
     }
 
-    public String getPlace() {
-        return place;
+    public String getLocation() {
+        return location;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public View getView() {
@@ -66,7 +66,7 @@ public class Place implements IAbstractView, Serializable {
 
     @Override
     public int getLayout() {
-        return R.layout.recyclerview_places_item;
+        return R.layout.item_recyclerview_place;
     }
 
     public ArrayList<Contact> getListaContact() {
