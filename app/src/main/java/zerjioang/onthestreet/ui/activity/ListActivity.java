@@ -16,6 +16,7 @@ public class ListActivity extends AbstractBaseActivity {
     private ActivityController controller;
     private RecyclerView placesRecyclerView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

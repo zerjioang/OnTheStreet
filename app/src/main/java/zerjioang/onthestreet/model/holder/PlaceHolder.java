@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import zerjioang.onthestreet.R;
+import zerjioang.onthestreet.data.DataManager;
 import zerjioang.onthestreet.model.pojox.Place;
 
 /**
@@ -28,7 +29,7 @@ public class PlaceHolder extends RecyclerView.ViewHolder{
         this.placeName.setText(place.getName());
         this.placeLocation.setText(place.getPlace());
         this.placeContactNumber.setText("Contacts: "+place.getContactCount());
-
+        DataManager.getInstance().setLastViewedPlace(place);
         if(listener!=null){
             itemView.setOnClickListener(listener);
         }

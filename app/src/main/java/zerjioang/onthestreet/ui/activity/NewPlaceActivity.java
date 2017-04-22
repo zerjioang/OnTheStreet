@@ -27,13 +27,6 @@ public class NewPlaceActivity extends AbstractBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_place);
-        /*
-        ActionBar bar = getActionBar();
-        if(bar!=null){
-            bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#330000ff")));
-            bar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#550000ff")));
-        }
-        */
 
         txtPlaceName = (EditText) findViewById(R.id.txtPlaceName);
         txtPlaceDescription = (EditText) findViewById(R.id.txtPlaceDescription);

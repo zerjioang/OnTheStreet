@@ -18,6 +18,7 @@ import zerjioang.onthestreet.model.pojox.Place;
 
 public class DataManager {
     private static final DataManager ourInstance = new DataManager();
+    private Place lastViewedPlace;
 
     public static DataManager getInstance() {
         return ourInstance;
@@ -66,5 +67,13 @@ public class DataManager {
 
     public ArrayList<Place> getPlaceList(){
         return this.placeList;
+    }
+
+    public void setLastViewedPlace(Place lastViewedPlace) {
+        this.lastViewedPlace = lastViewedPlace;
+    }
+
+    public Place getLastViewedPlace() {
+        return lastViewedPlace;
     }
 }

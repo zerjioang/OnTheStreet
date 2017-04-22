@@ -51,4 +51,8 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     protected Activity getActivity() {
         return this;
     }
+
+    public Object getFromExtras(String id){
+        return null;
+    }
 }
