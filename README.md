@@ -1,7 +1,8 @@
 # OnTheStreet
 
 OnTheStreet Android application project
-Status: compilable
+
+Status: **compilable**
 
 Check issues for more information
 
