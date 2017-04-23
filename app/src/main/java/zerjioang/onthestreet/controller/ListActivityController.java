@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,9 @@ public class ListActivityController extends AbstractBaseController {
     private PlaceListAdapter recyclerAdapter;
 
     private StreetLocationManager locator;
-    
+    private RecyclerViewClickListener listener;
+    private RecyclerView placesRecyclerView;
+
     public ListActivityController(ListActivity listActivity) {
         super(listActivity);
         this.listActivity = listActivity;
@@ -55,7 +58,7 @@ public class ListActivityController extends AbstractBaseController {
         //read data from file
         ArrayList<Place> placeList = DataManager.getInstance().readPlaceList(listActivity);
         //create item click listener
-        RecyclerViewClickListener  listener = new RecyclerViewClickListener() {
+        listener = new RecyclerViewClickListener() {
             @Override
             public void recyclerViewListClicked(View v, int position) {
                 DataManager manager = DataManager.getInstance();
@@ -67,6 +70,7 @@ public class ListActivityController extends AbstractBaseController {
         //set adapter for data
         recyclerAdapter = new PlaceListAdapter(placeList, listener);
         placesRecyclerView.setAdapter(recyclerAdapter);
+        this.placesRecyclerView = placesRecyclerView;
     }
 
     public void reloadRecyclerView() {
@@ -108,5 +112,18 @@ public class ListActivityController extends AbstractBaseController {
     private void deletePlace(int position) {
         DataManager.getInstance().deletePlace(getActivity(), position);
         recyclerAdapter.notifyDataSetChanged();
+    }
+
+    public void filterByName(String nameToFilter) {
+        ArrayList<Place> list = DataManager.getInstance().getPlacesByName(nameToFilter);
+        if(list.size()>0){
+            //set adapter for data
+            recyclerAdapter = new PlaceListAdapter(list, listener);
+            placesRecyclerView.setAdapter(recyclerAdapter);
+            recyclerAdapter.notifyDataSetChanged();
+        }
+        else{
+            Toast.makeText(getActivity(), "No results found", Toast.LENGTH_SHORT).show();
+        }
     }
 }

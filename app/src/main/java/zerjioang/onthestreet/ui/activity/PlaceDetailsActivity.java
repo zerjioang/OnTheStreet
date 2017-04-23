@@ -84,6 +84,11 @@ public class PlaceDetailsActivity extends AbstractBaseActivity {
     }
 
     @Override
+    public boolean showSearchIcon() {
+        return false;
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         getThisController().onActivityResult(requestCode, resultCode, data);

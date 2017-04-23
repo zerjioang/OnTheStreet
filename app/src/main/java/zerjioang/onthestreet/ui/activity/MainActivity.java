@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import zerjioang.onthestreet.R;
 
-public class MainActivity extends AbstractBaseActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

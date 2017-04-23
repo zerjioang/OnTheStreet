@@ -28,7 +28,12 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        if(showSearchIcon()){
+            inflater.inflate(R.menu.menu_main_with_search, menu);
+        }
+        else{
+            inflater.inflate(R.menu.menu_main, menu);
+        }
         return true;
     }
 
@@ -61,4 +66,6 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
         }
         return false;
     }
+
+    public abstract boolean showSearchIcon();
 }

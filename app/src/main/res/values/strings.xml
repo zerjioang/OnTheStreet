@@ -53,5 +53,9 @@
 
     <string name="delete_app_data">Delete application data</string>
     <string name="no_location_detected">No location detected</string>
+    <string name="search">Search</string>
+    <string name="dialog_title_search_plac">Search place</string>
+    <string name="dialog_about_title">Alpha version</string>
+    <string name="diaog_about_body">On the street app</string>
 
 </resources>

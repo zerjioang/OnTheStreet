@@ -122,4 +122,20 @@ public class DataManager {
     public void setLastViewedPlacePosition(int lastViewedPlacePosition) {
         this.lastViewedPlacePosition = lastViewedPlacePosition;
     }
+
+    public ArrayList<Place> getPlacesByName(String nameToFilter) {
+        if(nameToFilter.trim().length()==0){
+            return this.placeList; //return original list if empty
+        }
+        else{
+            //run filter
+            ArrayList<Place> matches = new ArrayList<>();
+            for(Place p : placeList){
+                if(p.getName().toLowerCase().contains(nameToFilter.toLowerCase())){
+                    matches.add(p);
+                }
+            }
+            return matches;
+        }
+    }
 }

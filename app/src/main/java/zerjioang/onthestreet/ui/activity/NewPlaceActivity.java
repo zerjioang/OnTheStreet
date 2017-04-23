@@ -85,6 +85,11 @@ public class NewPlaceActivity extends AbstractBaseActivity {
         });
     }
 
+    @Override
+    public boolean showSearchIcon() {
+        return false;
+    }
+
     //code
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent data) {

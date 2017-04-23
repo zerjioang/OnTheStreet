@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
 
+import zerjioang.onthestreet.R;
 import zerjioang.onthestreet.ui.activity.settings.SettingsActivity;
 
 /**
@@ -43,8 +46,8 @@ public abstract class AbstractBaseController {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         // 2. Chain together various setter methods to set the dialog characteristics
-        builder.setMessage("On the street app")
-                .setTitle("Alpha version")
+        builder.setMessage(R.string.diaog_about_body)
+                .setTitle(R.string.dialog_about_title)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -55,5 +58,40 @@ public abstract class AbstractBaseController {
         // 3. Get the AlertDialog from create()
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void search(final AbstractCode runAfter) {
+        //https://stackoverflow.com/questions/10903754/input-text-dialog-android
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.dialog_title_search_plac);
+
+        // Set up the input
+        final EditText input = new EditText(getActivity());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        //add padding programatically. cool ui
+        // https://stackoverflow.com/questions/9685658/add-padding-on-view-programmatically
+        float density = getActivity().getResources().getDisplayMetrics().density;
+        int paddingPixel = 10;
+        int paddingDp = (int)(paddingPixel * density);
+        input.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String name = input.getText().toString();
+                runAfter.execute(name);
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }
