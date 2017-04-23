@@ -126,7 +126,7 @@ public class NewPlaceActivity extends AbstractBaseActivity {
         this.p.setName(place.getName().toString());
         this.p.setLocation(place.getAddress().toString());
         this.p.setLat(place.getLatLng().latitude);
-        this.p.setLat(place.getLatLng().longitude);
+        this.p.setLon(place.getLatLng().longitude);
         this.p.setDescription(defaultDescription);
     }
 }
