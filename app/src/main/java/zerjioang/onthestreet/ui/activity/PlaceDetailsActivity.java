@@ -17,7 +17,6 @@ import zerjioang.onthestreet.model.pojox.Place;
 public class PlaceDetailsActivity extends AbstractBaseActivity {
 
     private ShareActionProvider mShareActionProvider;
-    private PlaceDetailsController controller;
     private MenuItem shareItemMenu;
 
     private TextView textViewDetailsTitle;
@@ -30,25 +29,29 @@ public class PlaceDetailsActivity extends AbstractBaseActivity {
         setContentView(R.layout.activity_place_details);
 
         controller = new PlaceDetailsController(this);
-        controller.initGridView();
+        getThisController().initGridView();
 
         //get place data
-        controller.setLastSelectedPlace(DataManager.getInstance().getLastViewedPlace());
+        getThisController().setLastSelectedPlace(DataManager.getInstance().getLastViewedPlace());
 
         //get ui elements
         textViewDetailsTitle = (TextView) findViewById(R.id.textViewDetailsTitle);
         textViewDetailsDescription = (TextView) findViewById(R.id.textViewDetailsDescription);
         textViewDetailsLocation = (TextView) findViewById(R.id.textViewDetailsLocation);
 
-        controller.initContactList();
+        getThisController().initContactList();
 
         //init data
-        Place selectedPlace = controller.getLastSelectedPlace();
+        Place selectedPlace = getThisController().getLastSelectedPlace();
         if(selectedPlace!=null){
             textViewDetailsTitle.setText(selectedPlace.getName());
             textViewDetailsDescription.setText(selectedPlace.getDescription());
             textViewDetailsLocation.setText("LOCATION: "+selectedPlace.getLocation());
         }
+    }
+
+    private PlaceDetailsController getThisController() {
+        return (PlaceDetailsController)controller;
     }
 
     @Override
@@ -61,7 +64,7 @@ public class PlaceDetailsActivity extends AbstractBaseActivity {
         // Fetch and store ShareActionProvider
         mShareActionProvider = new ShareActionProvider(this);
         MenuItemCompat.setActionProvider(shareItemMenu, mShareActionProvider);
-        mShareActionProvider.setShareIntent(controller.getShareIntent());
+        mShareActionProvider.setShareIntent(getThisController().getShareIntent());
 
         mShareActionProvider.setShareHistoryFileName(
                 ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
@@ -73,7 +76,7 @@ public class PlaceDetailsActivity extends AbstractBaseActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_item_camera:
-                controller.pickImage();
+                getThisController().pickImage();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -83,6 +86,6 @@ public class PlaceDetailsActivity extends AbstractBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        controller.onActivityResult(requestCode, resultCode, data);
+        getThisController().onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import zerjioang.onthestreet.R;
 import zerjioang.onthestreet.controller.ListActivityController;
-import zerjioang.onthestreet.model.adapter.RecyclerViewClickListener;
 
-public class ListActivity extends AbstractBaseActivity implements RecyclerViewClickListener{
+public class ListActivity extends AbstractBaseActivity{
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
@@ -31,18 +29,17 @@ public class ListActivity extends AbstractBaseActivity implements RecyclerViewCl
 
         //create activity controller
         controller = new ListActivityController(this);
-        ((ListActivityController)controller).initFloatingActionButtonEvent(fab);
-        ((ListActivityController)controller).initRecyclerView(placesRecyclerView, this);
+        getThisController().initFloatingActionButtonEvent(fab);
+        getThisController().initRecyclerView(placesRecyclerView, this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ((ListActivityController)controller).reloadRecyclerView();
+        getThisController().reloadRecyclerView();
     }
 
-    @Override
-    public void recyclerViewListClicked(View v, int position) {
-
+    private ListActivityController getThisController() {
+        return (ListActivityController)controller;
     }
 }

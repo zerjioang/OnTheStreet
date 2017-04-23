@@ -20,8 +20,6 @@ public class NewPlaceActivity extends AbstractBaseActivity {
     private Button buttonSaveNewPlace;
     private Button btnAddContactNewPlace;
 
-    private NewPlaceController controller;
-
     private Place p;
 
     private boolean editMode;
@@ -57,7 +55,7 @@ public class NewPlaceActivity extends AbstractBaseActivity {
         buttonCancelNewPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.cancel();
+                getThisController().cancel();
             }
         });
 
@@ -67,13 +65,13 @@ public class NewPlaceActivity extends AbstractBaseActivity {
                 p.setName(txtPlaceName.getText().toString());
                 p.setDescription(txtPlaceDescription.getText().toString());
                 p.setLocation(txtPlaceLocation.getText().toString());
-                if(controller.isValidPlace(p)){
+                if(getThisController().isValidPlace(p)){
                     if(editMode){
                         int position = DataManager.getInstance().getLastViewedPlacePosition();
-                        controller.updateAndSave(getActivity(), position, p);
+                        getThisController().updateAndSave(getActivity(), position, p);
                     }
                     else{
-                        controller.save(p);
+                        getThisController().save(p);
                     }
                 }
             }
@@ -82,7 +80,7 @@ public class NewPlaceActivity extends AbstractBaseActivity {
         btnAddContactNewPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.addContact(p);
+                getThisController().addContact(p);
             }
         });
     }
@@ -91,6 +89,10 @@ public class NewPlaceActivity extends AbstractBaseActivity {
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-        controller.onActivityResult(reqCode, resultCode, data);
+        getThisController().onActivityResult(reqCode, resultCode, data);
+    }
+
+    private NewPlaceController getThisController() {
+        return (NewPlaceController)controller;
     }
 }
