@@ -3,7 +3,6 @@ package zerjioang.onthestreet.service;
 import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,6 +28,7 @@ import java.util.Locale;
 import zerjioang.onthestreet.R;
 import zerjioang.onthestreet.data.DataManager;
 import zerjioang.onthestreet.model.pojox.Place;
+import zerjioang.onthestreet.widget.SimpleWidgetProvider;
 
 
 /**
@@ -136,6 +136,8 @@ public class GPSLocationManagerService extends Service implements LocationListen
         if(p!=null){
             showNotification("Nearest place", p.getName());
         }
+        //notify changes to widgets
+        SimpleWidgetProvider.sendRefreshBroadcast(getContext());
         Log.d(TAG, s);
     }
 

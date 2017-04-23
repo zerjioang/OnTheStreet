@@ -119,4 +119,8 @@ public class Place implements IAbstractView, Serializable {
     public double getDistance() {
         return distance;
     }
+
+    public String getDistanceString() {
+        return String.format("%.2f", getDistance());
+    }
 }

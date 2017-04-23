@@ -11,6 +11,7 @@ import zerjioang.onthestreet.controller.NewPlaceController;
 import zerjioang.onthestreet.data.DataManager;
 import zerjioang.onthestreet.model.pojox.Place;
 import zerjioang.onthestreet.ui.activity.base.AbstractBaseActivity;
+import zerjioang.onthestreet.util.Util;
 
 public class NewPlaceActivity extends AbstractBaseActivity {
 
@@ -128,5 +129,11 @@ public class NewPlaceActivity extends AbstractBaseActivity {
         this.p.setLat(place.getLatLng().latitude);
         this.p.setLon(place.getLatLng().longitude);
         this.p.setDescription(defaultDescription);
+        this.p.setDistance(Util.getDistanceFromLatLonInKm(
+                DataManager.getInstance().getLatitude(),
+                DataManager.getInstance().getLongitude(),
+                this.p.getLat(),
+                this.p.getLon()
+        ));
     }
 }

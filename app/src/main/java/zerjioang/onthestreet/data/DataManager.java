@@ -227,6 +227,7 @@ public class DataManager {
                 );
             }
         }
+        //notify changes to places list
         if(this.placeListAdapter!=null){
             this.placeListAdapter.notifyDataSetChanged();
         }

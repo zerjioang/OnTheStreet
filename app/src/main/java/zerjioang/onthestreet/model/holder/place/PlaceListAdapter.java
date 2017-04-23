@@ -65,7 +65,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
             this.placeName.setText(place.getName());
             this.placeLocation.setText(place.getLocation());
             this.placeContactNumber.setText("Contacts: " + place.getContactCount());
-            this.itemPlaceDistanceTextView.setText(place.getDistance()+" km");
+            this.itemPlaceDistanceTextView.setText(place.getDistanceString()+" km");
             if (listener != null) {
                 DataManager.getInstance().setLastViewedPlace(place);
                 itemView.setOnClickListener(this);
