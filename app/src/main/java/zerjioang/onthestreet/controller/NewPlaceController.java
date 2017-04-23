@@ -8,11 +8,19 @@ import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import zerjioang.onthestreet.controller.base.AbstractBaseController;
 import zerjioang.onthestreet.data.DataManager;
 import zerjioang.onthestreet.model.pojox.Contact;
 import zerjioang.onthestreet.model.pojox.Place;
+import zerjioang.onthestreet.ui.activity.NewPlaceActivity;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by .local on 21/04/2017.
@@ -22,6 +30,7 @@ public class NewPlaceController extends AbstractBaseController {
 
     // Declare
     private static final int PICK_CONTACT = 1;
+    private static final int PLACE_PICKER_REQUEST = 2;
     private Place p;
 
     public NewPlaceController(Activity activity) {
@@ -54,7 +63,7 @@ public class NewPlaceController extends AbstractBaseController {
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         switch (reqCode) {
             case (PICK_CONTACT):
-                if (resultCode == Activity.RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     String phone = "";
                     Uri contactData = data.getData();
                     Cursor c = getActivity().managedQuery(contactData, null, null, null, null);
@@ -80,6 +89,13 @@ public class NewPlaceController extends AbstractBaseController {
                     }
                 }
                 break;
+            case PLACE_PICKER_REQUEST: {
+                if (resultCode == RESULT_OK) {
+                    com.google.android.gms.location.places.Place place = PlacePicker.getPlace(getActivity(), data);
+                    Toast.makeText(getActivity(), "Place selected", Toast.LENGTH_LONG).show();
+                    ((NewPlaceActivity)getActivity()).renderPlaceData(place);
+                }
+            }
         }
     }
 
@@ -113,5 +129,14 @@ public class NewPlaceController extends AbstractBaseController {
     public void updateAndSave(Activity activity, int position, Place p) {
         DataManager.getInstance().replaceAt(activity, position, p);
         getActivity().finish();
+    }
+
+    public void selectPlace(){
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            getActivity().startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 }

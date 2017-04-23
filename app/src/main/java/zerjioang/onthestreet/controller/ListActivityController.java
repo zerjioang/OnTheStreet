@@ -72,6 +72,7 @@ public class ListActivityController extends AbstractBaseController {
         recyclerAdapter = new PlaceListAdapter(placeList, listener);
         placesRecyclerView.setAdapter(recyclerAdapter);
         this.placesRecyclerView = placesRecyclerView;
+        DataManager.getInstance().setPlaceListAdapter(recyclerAdapter);
     }
 
     public void reloadRecyclerView() {
@@ -121,6 +122,7 @@ public class ListActivityController extends AbstractBaseController {
             //set adapter for data
             recyclerAdapter = new PlaceListAdapter(list, listener);
             placesRecyclerView.setAdapter(recyclerAdapter);
+            DataManager.getInstance().setPlaceListAdapter(recyclerAdapter);
             recyclerAdapter.notifyDataSetChanged();
         }
         else{

@@ -17,6 +17,7 @@ public class Place implements IAbstractView, Serializable {
     private String name, location, description;
     private ArrayList<Contact> listaContact;
     private double lat, lon;
+    private double distance;
 
     public Place(String name, String place, String description) {
         this.name = name;
@@ -30,6 +31,15 @@ public class Place implements IAbstractView, Serializable {
         this.description = "";
         this.location = "";
         this.listaContact = new ArrayList<>();
+    }
+
+    public Place(String name, String place, String description, double lat, double lon) {
+        this.name = name;
+        this.location = place;
+        this.description = description;
+        this.listaContact = new ArrayList<>();
+        this.lat = lat;
+        this.lon = lon;
     }
 
     public String getDescription() {
@@ -100,5 +110,13 @@ public class Place implements IAbstractView, Serializable {
 
     public void setLon(double lon) {
         this.lon = lon;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public double getDistance() {
+        return distance;
     }
 }

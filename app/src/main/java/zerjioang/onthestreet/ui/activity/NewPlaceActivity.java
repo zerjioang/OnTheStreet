@@ -24,6 +24,7 @@ public class NewPlaceActivity extends AbstractBaseActivity {
     private Place p;
 
     private boolean editMode;
+    private Button btnAddLocationMapNewPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class NewPlaceActivity extends AbstractBaseActivity {
         txtPlaceName = (EditText) findViewById(R.id.txtPlaceName);
         txtPlaceDescription = (EditText) findViewById(R.id.txtPlaceDescription);
         txtPlaceLocation = (EditText) findViewById(R.id.txtPlaceLocation);
+
+        btnAddLocationMapNewPlace = (Button) findViewById(R.id.btnAddLocationMapNewPlace);
         buttonCancelNewPlace = (Button) findViewById(R.id.buttonCancelNewPlace);
         buttonSaveNewPlace = (Button) findViewById(R.id.buttonSaveNewPlace);
         btnAddContactNewPlace = (Button) findViewById(R.id.btnAddContactNewPlace);
@@ -84,6 +87,13 @@ public class NewPlaceActivity extends AbstractBaseActivity {
                 getThisController().addContact(p);
             }
         });
+
+        btnAddLocationMapNewPlace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getThisController().selectPlace();
+            }
+        });
     }
 
     @Override
@@ -100,5 +110,23 @@ public class NewPlaceActivity extends AbstractBaseActivity {
 
     private NewPlaceController getThisController() {
         return (NewPlaceController)controller;
+    }
+
+    public void renderPlaceData(com.google.android.gms.location.places.Place place) {
+        String defaultDescription = place.getName()
+                +"\n\nSituado en "+place.getAddress()+
+                "\n\nEl numero de telefono es: "+place.getPhoneNumber();
+
+        //render in UI
+        txtPlaceName.setText(place.getName());
+        txtPlaceLocation.setText(place.getAddress());
+        txtPlaceDescription.setText(defaultDescription);
+
+        //save in model
+        this.p.setName(place.getName().toString());
+        this.p.setLocation(place.getAddress().toString());
+        this.p.setLat(place.getLatLng().latitude);
+        this.p.setLat(place.getLatLng().longitude);
+        this.p.setDescription(defaultDescription);
     }
 }

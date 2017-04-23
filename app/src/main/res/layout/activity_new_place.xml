@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/colorPrimaryDark"
-                    android:text="Set location"
+                    android:text="Add contact"
                     android:textColor="@android:color/white" />
 
                 <Button
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/colorPrimaryDark"
-                    android:text="Add contact"
+                    android:text="Set location"
                     android:textColor="@android:color/white" />
 
             </LinearLayout>

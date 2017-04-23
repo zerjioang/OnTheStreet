@@ -1,11 +1,13 @@
 package zerjioang.onthestreet.service;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,9 +17,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import zerjioang.onthestreet.R;
 import zerjioang.onthestreet.data.DataManager;
+import zerjioang.onthestreet.model.pojox.Place;
 
 
 /**
@@ -38,8 +39,8 @@ public class GPSLocationManagerService extends Service implements LocationListen
 
     private static final String TAG = "LocationService";
     private static final long MINIMUM_TIME = 1000; //ms update every 1000 ms
-    private static final float MINIMUM_DISTANCE = 10;
-    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
+    private static final float MINIMUM_DISTANCE = 1;
+    private static boolean gpsStatus;
 
     private LocationManager locationManager;
     private Location lastBestLocation;
@@ -47,10 +48,11 @@ public class GPSLocationManagerService extends Service implements LocationListen
     public GPSLocationManagerService() {
     }
 
-    public void build() {
-        locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            buildAlertMessageNoGps();
+    public void build(Context c) {
+        locationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
+        gpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if(!gpsStatus){
+            buildAlertMessageNoGps(c);
         }
     }
 
@@ -71,14 +73,14 @@ public class GPSLocationManagerService extends Service implements LocationListen
         }
     }
 
-    private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+    public static void buildAlertMessageNoGps(final Context c) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setMessage(R.string.dialog_gps_off_message)
                 .setTitle(R.string.dialog_gps_off_title)
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        getContext().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)); //open gps settings
+                        c.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)); //open gps settings
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -125,9 +127,15 @@ public class GPSLocationManagerService extends Service implements LocationListen
         }
         String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
                 + cityName;
-        DataManager.getInstance().setLatitude(latitude);
-        DataManager.getInstance().setLongitude(longitude);
+        DataManager.getInstance().setLatitude(location.getLatitude());
+        DataManager.getInstance().setLongitude(location.getLongitude());
         DataManager.getInstance().setUserLocationName(cityName);
+        DataManager.getInstance().updatePlacesDistances();
+        //show nearest place notification
+        Place p = DataManager.getInstance().getNearestPlace();
+        if(p!=null){
+            showNotification("Nearest place", p.getName());
+        }
         Log.d(TAG, s);
     }
 
@@ -150,19 +158,20 @@ public class GPSLocationManagerService extends Service implements LocationListen
      * @return the last know best location
      */
     private Location getLastBestLocation() {
+        //dont worry about de warnings, permissions are already been granted previously
         Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         Location locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-        long GPSLocationTime = 0;
-        if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }
+        long gpsLocationTime = 0;
+        if (null != locationGPS) { gpsLocationTime = locationGPS.getTime(); }
 
-        long NetLocationTime = 0;
+        long netLocationTime = 0;
 
         if (null != locationNet) {
-            NetLocationTime = locationNet.getTime();
+            netLocationTime = locationNet.getTime();
         }
 
-        if ( 0 < GPSLocationTime - NetLocationTime ) {
+        if ( 0 < gpsLocationTime - netLocationTime ) {
             return locationGPS;
         }
         else {
@@ -171,13 +180,32 @@ public class GPSLocationManagerService extends Service implements LocationListen
     }
 
     private void showNotification(String title, String msg){
-        //https://developer.android.com/training/notify-user/build-notification.html#action
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(getContext())
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(title)
-                        .setContentText(msg);
-        mBuilder.build();
+    //https://stackoverflow.com/questions/1207269/sending-a-notification-from-a-service-in-android
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            // prepare intent which is triggered if the
+            // notification is selected
+            //Intent intent = new Intent(this, NotificationReceiver.class);
+            //PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+            // build notification
+            // the addAction re-use the same intent to keep the example short
+            Notification n = null;
+            n = new Notification.Builder(this)
+                    .setContentTitle(title)
+                    .setContentText(msg)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    //.setContentIntent(pIntent)
+                    .setAutoCancel(true).build();
+
+                        /*.addAction(R.drawable.icon, "Call", pIntent)
+                        .addAction(R.drawable.icon, "More", pIntent)
+                        .addAction(R.drawable.icon, "And more", pIntent).build()*/
+
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+            notificationManager.notify(0, n);
+        }
     }
 
     @Override
@@ -189,7 +217,7 @@ public class GPSLocationManagerService extends Service implements LocationListen
     public void onCreate() {
         // Code to execute when the service is first created
         DataManager.getInstance().setLocationStatus(getContext(), true);
-        this.build();
+        this.build(getContext());
         this.start();
     }
 

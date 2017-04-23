@@ -34,7 +34,7 @@
         <activity android:name=".ui.activity.PlaceDetailsActivity" />
         <activity
             android:name=".ui.activity.settings.SettingsActivity"
-            android:label="@string/title_activity_settings" />
+                android:label="@string/title_activity_settings" />
 
         <!-- Start the Service if applicable on boot -->
         <receiver android:name=".receiver.BootReceiver">
@@ -46,6 +46,10 @@
         <!-- declare service -->
         <service android:name=".service.GPSLocationManagerService" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBd9ePp-wy8zlIcCVm6tW6gm0sxZ5bk36o"/>
     </application>
+
 
 </manifest>

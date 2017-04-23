@@ -49,6 +49,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
         private TextView placeName;
         private TextView placeLocation;
         private TextView placeContactNumber;
+        private final TextView itemPlaceDistanceTextView;
         private final RecyclerViewClickListener listener;
 
         public PlaceHolder(View itemView, RecyclerViewClickListener listener) {
@@ -56,6 +57,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
             placeName = (TextView) itemView.findViewById(R.id.itemPlaceNameTextView);
             placeLocation = (TextView) itemView.findViewById(R.id.itemPlaceLocationTextView);
             placeContactNumber = (TextView) itemView.findViewById(R.id.itemPlaceContactNumberTextView);
+            itemPlaceDistanceTextView = (TextView) itemView.findViewById(R.id.itemPlaceDistanceTextView);
             this.listener = listener;
         }
 
@@ -63,6 +65,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
             this.placeName.setText(place.getName());
             this.placeLocation.setText(place.getLocation());
             this.placeContactNumber.setText("Contacts: " + place.getContactCount());
+            this.itemPlaceDistanceTextView.setText(place.getDistance()+" km");
             if (listener != null) {
                 DataManager.getInstance().setLastViewedPlace(place);
                 itemView.setOnClickListener(this);
