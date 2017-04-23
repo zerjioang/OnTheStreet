@@ -2,6 +2,8 @@ package zerjioang.onthestreet.data;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import zerjioang.onthestreet.model.pojox.Place;
+import zerjioang.onthestreet.service.GPSLocationManagerService;
 
 /**
  * Created by .local on 20/04/2017.
@@ -21,6 +24,9 @@ public class DataManager {
     private static final DataManager ourInstance = new DataManager();
     private Place lastViewedPlace;
     private int lastViewedPlacePosition;
+    private String longitude;
+    private String latitude;
+    private String userLocationName;
 
     public static DataManager getInstance() {
         return ourInstance;
@@ -137,5 +143,45 @@ public class DataManager {
             }
             return matches;
         }
+    }
+
+    public void enabledServices(Context c) {
+        c.startService(new Intent(c, GPSLocationManagerService.class));
+    }
+
+    public SharedPreferences getSharedPreferences(Context c) {
+        return c.getSharedPreferences("prefereces.onthestreet", Context.MODE_PRIVATE);
+    }
+
+    public void setLocationStatus(Context c, boolean status) {
+        getSharedPreferences(c).edit().putBoolean("location.running", status).apply();
+    }
+
+    public boolean getLocationStatus(Context c) {
+        return getSharedPreferences(c).getBoolean("location.running", false);
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setUserLocationName(String userLocationName) {
+        this.userLocationName = userLocationName;
+    }
+
+    public String getUserLocationName() {
+        return userLocationName;
     }
 }

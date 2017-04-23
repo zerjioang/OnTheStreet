@@ -1,4 +1,4 @@
-package zerjioang.onthestreet.ui.activity;
+package zerjioang.onthestreet.ui.activity.base;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import zerjioang.onthestreet.R;
-import zerjioang.onthestreet.controller.AbstractBaseController;
+import zerjioang.onthestreet.controller.base.AbstractBaseController;
 
 /**
  * Created by .local on 19/04/2017.

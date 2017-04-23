@@ -57,5 +57,7 @@
     <string name="dialog_title_search_plac">Search place</string>
     <string name="dialog_about_title">Alpha version</string>
     <string name="diaog_about_body">On the street app</string>
+    <string name="dialog_gps_off_message">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="dialog_gps_off_title">GPS not enabled</string>
 
 </resources>

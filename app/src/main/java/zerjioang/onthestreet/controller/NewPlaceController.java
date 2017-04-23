@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
+import zerjioang.onthestreet.controller.base.AbstractBaseController;
 import zerjioang.onthestreet.data.DataManager;
 import zerjioang.onthestreet.model.pojox.Contact;
 import zerjioang.onthestreet.model.pojox.Place;

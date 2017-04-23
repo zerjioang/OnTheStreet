@@ -1,4 +1,4 @@
-package zerjioang.onthestreet.controller;
+package zerjioang.onthestreet.base;
 
 /**
  * Created by .local on 23/04/2017.

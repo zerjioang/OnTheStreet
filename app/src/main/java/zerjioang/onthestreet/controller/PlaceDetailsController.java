@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import zerjioang.onthestreet.R;
+import zerjioang.onthestreet.controller.base.AbstractBaseController;
 import zerjioang.onthestreet.data.DataManager;
 import zerjioang.onthestreet.model.holder.contact.ContactListAdapter;
 import zerjioang.onthestreet.model.holder.placeImage.ImageAdapter;

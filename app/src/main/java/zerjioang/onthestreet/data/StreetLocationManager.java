@@ -1,4 +1,4 @@
-package zerjioang.onthestreet.controller;
+package zerjioang.onthestreet.data;
 
 import android.app.Activity;
 import android.location.Location;
@@ -14,7 +14,7 @@ import static android.content.ContentValues.TAG;
  * Created by .local on 22/04/2017.
  */
 
-class StreetLocationManager implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class StreetLocationManager implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     //https://developer.android.com/training/location/retrieve-current.html#permissions
     //https://github.com/googlesamples/android-play-location/blob/master/BasicLocationSample/app/src/main/java/com/google/android/gms/location/sample/basiclocationsample/MainActivity.java

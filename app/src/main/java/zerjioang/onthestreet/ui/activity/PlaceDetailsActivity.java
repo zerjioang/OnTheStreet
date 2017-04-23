@@ -13,6 +13,7 @@ import zerjioang.onthestreet.R;
 import zerjioang.onthestreet.controller.PlaceDetailsController;
 import zerjioang.onthestreet.data.DataManager;
 import zerjioang.onthestreet.model.pojox.Place;
+import zerjioang.onthestreet.ui.activity.base.AbstractBaseActivity;
 
 public class PlaceDetailsActivity extends AbstractBaseActivity {
 

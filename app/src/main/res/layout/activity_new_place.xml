@@ -85,7 +85,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Add contact" />
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:text="Set location"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btnAddLocationMapNewPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:text="Add contact"
+                    android:textColor="@android:color/white" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -99,14 +111,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/cancel" />
+                    android:backgroundTint="@color/colorPrimary"
+                    android:text="@string/cancel"
+                    android:textColor="@android:color/white" />
 
                 <Button
                     android:id="@+id/buttonSaveNewPlace"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/save" />
+                    android:backgroundTint="@color/colorPrimary"
+                    android:text="@string/save"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
         </LinearLayout>

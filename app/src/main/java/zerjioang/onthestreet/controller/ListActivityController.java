@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import zerjioang.onthestreet.R;
+import zerjioang.onthestreet.controller.base.AbstractBaseController;
 import zerjioang.onthestreet.data.DataManager;
 import zerjioang.onthestreet.model.adapter.RecyclerViewClickListener;
 import zerjioang.onthestreet.model.holder.place.PlaceListAdapter;
@@ -30,14 +31,14 @@ public class ListActivityController extends AbstractBaseController {
     private LinearLayoutManager mLinearLayoutManager;
     private PlaceListAdapter recyclerAdapter;
 
-    private StreetLocationManager locator;
+    //private StreetLocationManager locator;
     private RecyclerViewClickListener listener;
     private RecyclerView placesRecyclerView;
 
     public ListActivityController(ListActivity listActivity) {
         super(listActivity);
         this.listActivity = listActivity;
-        this.locator = new StreetLocationManager(listActivity);
+        //this.locator = new StreetLocationManager(listActivity);
     }
 
     public void initFloatingActionButtonEvent(FloatingActionButton fab) {

@@ -1,4 +1,4 @@
-package zerjioang.onthestreet.controller;
+package zerjioang.onthestreet.controller.base;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import zerjioang.onthestreet.R;
+import zerjioang.onthestreet.base.AbstractCode;
 import zerjioang.onthestreet.ui.activity.settings.SettingsActivity;
 
 /**
