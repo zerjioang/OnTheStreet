@@ -7,6 +7,8 @@ Check issues for more information
 
 <p align="center">
 <img src ="https://raw.githubusercontent.com/zerjioang/OnTheStreet/master/readme/main.jpg" width=200 />
+<img src ="https://raw.githubusercontent.com/zerjioang/OnTheStreet/master/readme/list.jpg" width=200/>
+<img src ="https://raw.githubusercontent.com/zerjioang/OnTheStreet/master/readme/places.jpg" width=200 />
 <img src ="https://raw.githubusercontent.com/zerjioang/OnTheStreet/master/readme/widget.jpg" width=200/>
 </p>
 
