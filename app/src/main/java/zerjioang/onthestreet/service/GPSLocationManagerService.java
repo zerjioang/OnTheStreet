@@ -137,7 +137,7 @@ public class GPSLocationManagerService extends Service implements LocationListen
             showNotification("Nearest place", p.getName());
         }
         //notify changes to widgets
-        SimpleWidgetProvider.sendRefreshBroadcast(getContext());
+        SimpleWidgetProvider.onDemandWidgetRefreshRequest(getContext());
         Log.d(TAG, s);
     }
 
