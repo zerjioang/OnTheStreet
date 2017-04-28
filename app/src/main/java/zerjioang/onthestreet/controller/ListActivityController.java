@@ -38,7 +38,6 @@ public class ListActivityController extends AbstractBaseController {
     public ListActivityController(ListActivity listActivity) {
         super(listActivity);
         this.listActivity = listActivity;
-        //this.locator = new StreetLocationManager(listActivity);
     }
 
     public void initFloatingActionButtonEvent(FloatingActionButton fab) {

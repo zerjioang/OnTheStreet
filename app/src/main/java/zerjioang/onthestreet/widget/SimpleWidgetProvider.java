@@ -22,7 +22,7 @@ public class SimpleWidgetProvider extends AppWidgetProvider {
     private static final String REFRESH_ACTION = "android.appwidget.action.APPWIDGET_UPDATE";
 
     private static void updateWidgetValues(AppWidgetManager appWidgetManager, Context context, RemoteViews remoteViews) {
-        
+
         Intent inet = new Intent(context, PlaceDetailsActivity.class);
         inet.putExtra("widget", true);
         inet.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

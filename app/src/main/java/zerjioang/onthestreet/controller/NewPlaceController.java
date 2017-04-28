@@ -70,20 +70,6 @@ public class NewPlaceController extends AbstractBaseController {
                     if (c.moveToFirst()) {
                         String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
                         String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                        if (hasPhone.equalsIgnoreCase("1")) {
-                            //TODO throws security exception when reading contact number. use runtime permissions check
-                            /*
-                            Cursor phones = getActivity().getContentResolver().query(
-
-                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
-                                    null, null);
-                            phones.moveToFirst();
-                            phone = phones.getString(phones.getColumnIndex("data1"));
-                            System.out.println("number is:" + phone);
-                            phones.close();
-                            */
-                        }
                         String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                         p.addContact(new Contact(name, "", phone));
                     }

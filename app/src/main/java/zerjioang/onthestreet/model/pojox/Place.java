@@ -2,6 +2,7 @@ package zerjioang.onthestreet.model.pojox;
 
 import android.view.View;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import zerjioang.onthestreet.model.adapter.IAbstractView;
 
 public class Place implements IAbstractView, Serializable {
 
+    private final ArrayList<File> imagelist;
     private String name, location, description;
     private ArrayList<Contact> listaContact;
     private double lat, lon;
@@ -24,6 +26,7 @@ public class Place implements IAbstractView, Serializable {
         this.location = place;
         this.description = description;
         this.listaContact = new ArrayList<>();
+        this.imagelist = new ArrayList<>();
     }
 
     public Place() {
@@ -31,6 +34,7 @@ public class Place implements IAbstractView, Serializable {
         this.description = "";
         this.location = "";
         this.listaContact = new ArrayList<>();
+        this.imagelist = new ArrayList<>();
     }
 
     public Place(String name, String place, String description, double lat, double lon) {
@@ -40,6 +44,7 @@ public class Place implements IAbstractView, Serializable {
         this.listaContact = new ArrayList<>();
         this.lat = lat;
         this.lon = lon;
+        this.imagelist = new ArrayList<>();
     }
 
     public String getDescription() {
@@ -122,5 +127,13 @@ public class Place implements IAbstractView, Serializable {
 
     public String getDistanceString() {
         return String.format("%.2f", getDistance());
+    }
+
+    public ArrayList<File> getImagelist() {
+        return imagelist;
+    }
+
+    public void addImage(File f) {
+        this.imagelist.add(f);
     }
 }

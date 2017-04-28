@@ -68,8 +68,18 @@ public class GPSLocationManagerService extends Service implements LocationListen
             return;
         }
         else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MINIMUM_TIME, MINIMUM_DISTANCE, this);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MINIMUM_TIME, MINIMUM_DISTANCE, this);
+            try{
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MINIMUM_TIME, MINIMUM_DISTANCE, this);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            try{
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MINIMUM_TIME, MINIMUM_DISTANCE, this);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

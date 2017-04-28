@@ -2,16 +2,21 @@ package zerjioang.onthestreet.controller;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import zerjioang.onthestreet.R;
@@ -35,6 +40,7 @@ public class PlaceDetailsController extends AbstractBaseController {
     private static final int SELECT_FILE = 2;
     private LinearLayoutManager mLinearLayoutManager;
     private Place lastSelectedPlace;
+    private ImageAdapter gridAdapter;
 
 
     public PlaceDetailsController(PlaceDetailsActivity placeDetailsActivity) {
@@ -60,7 +66,7 @@ public class PlaceDetailsController extends AbstractBaseController {
                     Intent intent = new Intent(
                             Intent.ACTION_PICK,
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    getActivity().startActivityForResult(intent,SELECT_FILE);
+                    getActivity().startActivityForResult(intent, SELECT_FILE);
                 } else if (items[item].equals(items[2])) {
                     dialog.dismiss();
                 }
@@ -74,33 +80,84 @@ public class PlaceDetailsController extends AbstractBaseController {
         sharingIntent.setType("text/plain");
         Place p = DataManager.getInstance().getLastViewedPlace();
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, p.getName());
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "OnTheStreet\nCheck out this awesome place:\n\nPlace:\t"+p.getName()+"\n\tDescription:"+p.getDescription());
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "OnTheStreet\nCheck out this awesome place:\n\nPlace:\t" + p.getName() + "\n\tDescription:" + p.getDescription());
         return sharingIntent;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
+        switch (requestCode) {
             case REQUEST_CAMERA:
-                if(resultCode == RESULT_OK){
-                    Uri selectedImage = data.getData();
-                    //imageview.setImageURI(selectedImage);
-                    Log.d(getClass().getSimpleName(), selectedImage.toString());
+                if (resultCode == RESULT_OK) {
+                    addImageFromCamera(data);
+                    gridAdapter.notifyDataSetChanged();
+                    DataManager.getInstance().savePlaceList(getActivity());
                 }
-
                 break;
             case SELECT_FILE:
-                if(resultCode == RESULT_OK){
-                    Uri selectedImage = data.getData();
-                    //imageview.setImageURI(selectedImage);
-                    Log.d(getClass().getSimpleName(), selectedImage.toString());
+                if (resultCode == RESULT_OK) {
+                    addImageFromGallery(data);
+                    gridAdapter.notifyDataSetChanged();
+                    DataManager.getInstance().savePlaceList(getActivity());
                 }
                 break;
         }
     }
 
+    private void addImageFromGallery(Intent data) {
+        Uri pickedImage = data.getData();
+        // Let's read picked image path using content resolver
+        String[] filePath = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().getContentResolver().query(pickedImage, filePath, null, null, null);
+        cursor.moveToFirst();
+        String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+        linkImageToPlace(new File(imagePath));
+    }
+
+    private void addImageFromCamera(Intent data) {
+         Bitmap photo = (Bitmap) data.getExtras().get("data");
+        if (photo != null) {
+            //save image on disk
+            saveImageOnDisk(photo);
+        }
+    }
+
+    private void saveImageOnDisk(Bitmap photo) {
+        File f = saveBitmapOnStorage(photo);
+        linkImageToPlace(f);
+    }
+
+    private void linkImageToPlace(File f) {
+        this.lastSelectedPlace.addImage(f);
+    }
+
+    private File saveBitmapOnStorage(Bitmap bmp) {
+        String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+        OutputStream outStream = null;
+        String filename = "photo_" + System.currentTimeMillis() + ".png";
+        // String temp = null;
+        File file = new File(extStorageDirectory, filename);
+        if (file.exists()) {
+            file.delete();
+            file = new File(extStorageDirectory, filename);
+        }
+        try {
+            outStream = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            outStream.flush();
+            outStream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return file;
+    }
+
     public void initGridView() {
         GridView gridview = (GridView) getActivity().findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(getActivity()));
+        lastSelectedPlace = DataManager.getInstance().getLastViewedPlace();
+        gridAdapter = new ImageAdapter(getActivity(), lastSelectedPlace);
+        gridview.setAdapter(gridAdapter);
 
         //gridview listener
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,16 +177,6 @@ public class PlaceDetailsController extends AbstractBaseController {
 
         //read data from file
         ArrayList<Contact> contactList = lastSelectedPlace.getListaContact();
-
-        //create item click listener
-        /*
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showChooserDialog();
-            }
-        };
-        */
 
         //populate list view
         ContactListAdapter recyclerAdapter = new ContactListAdapter(contactList, null);
