@@ -21,8 +21,7 @@ To support this project you can:
   - Submit bug using one of following ways:
     * Error stacktrace string and log files.
     * Error log and link to public available apk file.
-  - Do NOT forget to fullfil [issue template](https://github.com/droidefense/engine/blob/master/.github/ISSUE_TEMPLATE.md)
-  
+    
 And any other comments will be very appreciate.
 
 # License
